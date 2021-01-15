@@ -3,6 +3,7 @@ import axios from 'axios';
 
 import Location from "./components/Location";
 import SearchList from './components/SearchList';
+import SearchBar from './components/SearchBar';
 
 import Container from 'react-bootstrap/Container'
 import Col from 'react-bootstrap/Col'
@@ -11,6 +12,7 @@ import Row from 'react-bootstrap/Row';
 
 function App(props) {
   const [currentIP, setCurrentIP] = useState("");
+  const [searchIP, setSearchIP] = useState("");
 
   useEffect(() => {
     axios.get('https://api.ipify.org?format=json')
@@ -29,7 +31,7 @@ function App(props) {
                 <Location ip={currentIP}/>
             </Row>
             <Row>
-                Search row
+                <SearchBar search={(val) => {setSearchIP(val)}}/>
             </Row>
             <Row>
                Searched Location row
