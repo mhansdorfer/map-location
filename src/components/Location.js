@@ -29,10 +29,10 @@ export default function Location(props){
     return (
         <Container>
             <Row>
-                <Col sm={7} md={7} lg={7}>
+                <Col sm={8} md={7} lg={7}>
                     <LocationMap {...location} {...props} />
                 </Col>
-                <Col sm={5} md={5} lg={5}>
+                <Col sm={4} md={5} lg={5}>
                     <LocationInfo {...location}/>
                 </Col>
             </Row>

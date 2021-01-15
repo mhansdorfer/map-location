@@ -23,15 +23,21 @@ function App(props) {
     return (
       <Container className="p-3 my-4 bg-info text-white">
         <Row>
-          <Col md={3} lg={3} sm={4}>
-            <SearchList/>
+          <Col md={4} lg={4} sm={4}>
+            <SearchList locations={JSON.parse(sessionStorage.getItem("location_searches")) || []}/>
           </Col>
           <Col>
             <Row>
                 <Location ip={currentIP} popup="You are here!"/>
             </Row>
             <Row>
-                <SearchBar search={(val) => {setSearchIP(val)}}/>
+                <SearchBar 
+                  search={(val) => {
+                      setSearchIP(val);
+                      sessionStorage.setItem("location_searches", JSON.stringify([...(JSON.parse(sessionStorage.getItem("location_searches")) || []), val])); 
+                    }
+                  }
+                />
             </Row>
             <Row>
                 <Location ip={searchIP} popup="Your search location is here"/>
