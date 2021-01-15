@@ -12,7 +12,7 @@ export default function LocationMap(props){
                 />
                 <Marker position={[latitude, longitude]}>
                 <Popup>
-                    You're here!
+                    {props.popup}
                 </Popup>
                 </Marker>
             </MapContainer> : null;

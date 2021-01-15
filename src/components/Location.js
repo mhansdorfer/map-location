@@ -13,14 +13,15 @@ export default function Location(props){
     const [location, setLocation] = useState({});
 
     useEffect(()=> {
-        const url = `http://api.ipstack.com/${props.ip}?access_key=${process.env.REACT_APP_IP_STACK_ACCESS_KEY}&output=json`;
         
         if(props.ip !== ""){
-           axios.get(url)
-            .then(res => {
-                setLocation(res.data);
-            })
-            .catch(err => console.error(`My Error: ${err}`));
+            const url = `http://api.ipstack.com/${props.ip}?access_key=${process.env.REACT_APP_IP_STACK_ACCESS_KEY}&output=json`;
+            axios.get(url)
+                .then(res => { 
+                    setLocation({});//otherwise the map was not rerendered
+                    setLocation(res.data);
+                })
+                .catch(err => console.error(`My Error: ${err}`));
         }
        
     }, [props.ip]);
@@ -29,9 +30,9 @@ export default function Location(props){
         <Container>
             <Row>
                 <Col sm={7} md={7} lg={7}>
-                    <LocationMap {...location}/>
+                    <LocationMap {...location} {...props} />
                 </Col>
-                <Col sm={7} md={5} lg={5}>
+                <Col sm={5} md={5} lg={5}>
                     <LocationInfo {...location}/>
                 </Col>
             </Row>

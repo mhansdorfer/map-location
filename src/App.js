@@ -28,13 +28,13 @@ function App(props) {
           </Col>
           <Col>
             <Row>
-                <Location ip={currentIP}/>
+                <Location ip={currentIP} popup="You are here!"/>
             </Row>
             <Row>
                 <SearchBar search={(val) => {setSearchIP(val)}}/>
             </Row>
             <Row>
-               Searched Location row
+                <Location ip={searchIP} popup="Your search location is here"/>
             </Row>
           </Col>
         </Row>  
