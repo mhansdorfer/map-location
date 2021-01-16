@@ -11,14 +11,7 @@ import Row from 'react-bootstrap/Row';
 
 
 function App(props) {
-  const [currentIP, setCurrentIP] = useState("");
   const [searchIP, setSearchIP] = useState("");
-
-  useEffect(() => {
-    axios.get('https://api.ipify.org?format=json')
-    .then(res => setCurrentIP(res.data.ip))
-    .catch(err => console.error(`My err: ${err}`));
-  }, []);
 
     return (
       <Container className="p-3 my-4 bg-info text-white">
@@ -28,7 +21,7 @@ function App(props) {
           </Col>
           <Col>
             <Row>
-                <Location ip={currentIP} popup="You are here!"/>
+                <Location ip="check" popup="You are here!"/>
             </Row>
             <Row>
                 <SearchBar 
