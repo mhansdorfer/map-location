@@ -10,8 +10,10 @@ import Row from 'react-bootstrap/Row';
 import Alert from 'react-bootstrap/Alert';
 
 export default function Location(props){
+    const NOT_FOUND_ERROR_MESSAGE = "We could not have found this location. Please check your chosen IP or URL and try again.";
     const [location, setLocation] = useState({});
     const [isError, setIsError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState(NOT_FOUND_ERROR_MESSAGE);
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(()=> {
@@ -22,23 +24,24 @@ export default function Location(props){
                 .then(res => { 
                     const {latitude, longitude} = res.data;
                     if(latitude && longitude){
-                        setStatus(false, false);
+                        setStatus(false, false, "");
                         setLocation({});//otherwise the map was not rerendered
                         setLocation(res.data);
                     } 
-                    else setStatus(true, false);
+                    else setStatus(false, true, NOT_FOUND_ERROR_MESSAGE);
                 })
-                .catch(err => {
-                    setStatus(true, false);
-                    console.error(`Location Error: ${err}`)
+                .catch(error => {
+                    setStatus(false, true, "An error has occurred: "+ error.message);
+                    console.error(`Location Error: ${error}`);
                 });
         }
        
     }, [props.ip]);
 
-    const setStatus = (error, loading) => {
+    const setStatus = (loading, error, errorMessage) => {
         setIsLoading(loading);
         setIsError(error);
+        setErrorMessage(errorMessage);
     }
 
     return (
@@ -55,7 +58,7 @@ export default function Location(props){
                     <Row>
                         <Col lg={{ span: 6, offset: 3 }} md={{ span: 6, offset: 3 }} sm={{ span: 8, offset: 2 }} xs={{ span: 10, offset: 1 }}>
                             <Alert variant="danger" className="text-center my-5">
-                                We could not have found this location. Please check your chosen IP or URL and try again.
+                                {errorMessage}
                             </Alert> 
                         </Col>
                     </Row>    
