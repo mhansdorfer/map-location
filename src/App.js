@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 
 import Location from "./components/Location";
 import SearchList from './components/SearchList';
@@ -12,12 +12,15 @@ import Row from 'react-bootstrap/Row';
 
 function App(props) {
   const [searchIP, setSearchIP] = useState("");
+  const [searchList, setSearchList] = useState([]);
+
+  useEffect(() => setSearchList(getSearchLocationFromStorage(sessionStorage)), []); //init the list
 
     return (
       <Container className="p-3 my-4 bg-info text-white">
         <Row>
           <Col md={4} lg={4} sm={4}>
-            <SearchList locations={getSearchLocationFromStorage(sessionStorage)}/>
+            <SearchList locations={searchList}/>
           </Col>
           <Col>
             <Row>
@@ -27,7 +30,9 @@ function App(props) {
                 <SearchBar 
                   search={(val) => {
                       setSearchIP(val);
-                      if(val) saveSearchToStorage(val, sessionStorage);             
+                      if(val){
+                        setSearchList(saveSearchToStorage(val, sessionStorage));
+                      } 
                     }
                   }
                 />
