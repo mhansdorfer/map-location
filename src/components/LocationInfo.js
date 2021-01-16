@@ -1,11 +1,10 @@
 export default function LocationInfo(props){
     const {country_name, city, ip} = props;
     return (
-        <section>
-            <p>{city}</p>
-            <p>{country_name}</p>
-            <p>IP: {ip}</p>
+        <section className="text-center p-5">
+            <h3>{city}</h3>
+            <h5>{country_name}</h5>
+            <p>{ip}</p> 
         </section>
     );
-
 }
