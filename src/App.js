@@ -1,9 +1,9 @@
-import React, {useState, useEffect} from 'react';
-import axios from 'axios';
+import React, {useState} from 'react';
 
 import Location from "./components/Location";
 import SearchList from './components/SearchList';
 import SearchBar from './components/SearchBar';
+import { saveSearchToStorage, getSearchLocationFromStorage } from './utils';
 
 import Container from 'react-bootstrap/Container'
 import Col from 'react-bootstrap/Col'
@@ -17,7 +17,7 @@ function App(props) {
       <Container className="p-3 my-4 bg-info text-white">
         <Row>
           <Col md={4} lg={4} sm={4}>
-            <SearchList locations={JSON.parse(sessionStorage.getItem("location_searches")) || []}/>
+            <SearchList locations={getSearchLocationFromStorage(sessionStorage)}/>
           </Col>
           <Col>
             <Row>
@@ -27,7 +27,7 @@ function App(props) {
                 <SearchBar 
                   search={(val) => {
                       setSearchIP(val);
-                      sessionStorage.setItem("location_searches", JSON.stringify([...(JSON.parse(sessionStorage.getItem("location_searches")) || []), val])); 
+                      saveSearchToStorage(val, sessionStorage);             
                     }
                   }
                 />
