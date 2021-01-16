@@ -23,7 +23,14 @@ function SearchBar(props){
                     />
                 </Col>
                 <Col lg={2}>
-                    <Button variant="warning" onClick={() => {props.search(searchValue)}}>Search</Button>
+                    <Button 
+                        variant="warning" 
+                        onClick={() => {
+                            props.search(searchValue);
+                            setSearchValue("");
+                        }}>
+                        Search
+                    </Button>
                 </Col>
             </Row>
         </Container>
