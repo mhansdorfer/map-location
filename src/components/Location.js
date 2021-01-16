@@ -9,6 +9,10 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Alert from 'react-bootstrap/Alert';
 
+/**
+ * Component downloads information about location (ip / url) and then renders map and location info or error/loading messages
+ */
+
 export default function Location(props){
     const NOT_FOUND_ERROR_MESSAGE = "We could not have found this location. Please check your chosen IP or URL and try again.";
     const [location, setLocation] = useState({});
@@ -63,10 +67,10 @@ export default function Location(props){
                         </Col>
                     </Row>    
                     : <Row>
-                           <Col sm={8} md={7} lg={7}>
+                           <Col sm={5} md={7} lg={7}>
                                 <LocationMap {...location} {...props} />
                             </Col>
-                            <Col sm={4} md={5} lg={5}>
+                            <Col sm={7} md={5} lg={5}>
                                 <LocationInfo {...location}/>
                             </Col>
                       </Row>

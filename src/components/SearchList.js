@@ -5,7 +5,7 @@ export default function SearchList(props){
         props.locations && props.locations.length > 0 ?
             <>
                 <h5>Recently you have searched for:</h5>
-                <ListGroup className="text-dark overflow-auto mt-3" style={{height: "86vh"}}>
+                <ListGroup className="text-dark overflow-auto my-3" style={{height: "84vh"}}>
                     {props.locations ? props.locations.map((location, index)=>{
                         return <ListGroup.Item key={location + "-" +index}>{location}</ListGroup.Item> 
                     }) : null}

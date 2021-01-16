@@ -12,7 +12,7 @@ function SearchBar(props){
     return(
     <Container className="p-3 my-2">
             <Row>
-                <Col >
+                <Col lg={10} md={9} sm={8} xs={9}>
                     <input 
                         type="text" 
                         name="search" 
@@ -22,7 +22,7 @@ function SearchBar(props){
                         className="form-control"
                     />
                 </Col>
-                <Col lg={2}>
+                <Col lg={2} md={3} sm={4} xs={3}>
                     <Button 
                         variant="warning" 
                         onClick={() => {
