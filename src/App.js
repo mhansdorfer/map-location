@@ -27,7 +27,7 @@ function App(props) {
                 <SearchBar 
                   search={(val) => {
                       setSearchIP(val);
-                      saveSearchToStorage(val, sessionStorage);             
+                      if(val) saveSearchToStorage(val, sessionStorage);             
                     }
                   }
                 />
