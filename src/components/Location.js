@@ -51,16 +51,16 @@ export default function Location(props){
         <Container>
             {isLoading ? 
                 <Row>
-                    <Col lg={{ span: 6, offset: 3 }} md={{ span: 6, offset: 3 }} sm={{ span: 8, offset: 2 }} xs={{ span: 10, offset: 1 }}>
-                        <Alert variant="info" className="text-center my-5">
+                    <Col>
+                        <Alert variant="info" className="text-center my-5 py-3">
                             Loading...
                         </Alert> 
                     </Col>
                 </Row> 
                  : ( isError ? 
                     <Row>
-                        <Col lg={{ span: 6, offset: 3 }} md={{ span: 6, offset: 3 }} sm={{ span: 8, offset: 2 }} xs={{ span: 10, offset: 1 }}>
-                            <Alert variant="danger" className="text-center my-5">
+                        <Col >
+                            <Alert variant="danger" className="text-center my-5 py-3">
                                 {errorMessage}
                             </Alert> 
                         </Col>
