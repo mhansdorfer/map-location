@@ -22,22 +22,23 @@ export default function Location(props){
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(()=> {
-        if(props.ip === "") setStatus(false, false, "");
-        else if(!isValidSearch(props.ip)) setStatus(false, true, ERROR_MESSAGE.INVALID);
-        else {
-            const url = `http://api.ipstack.com/${props.ip}?access_key=${process.env.REACT_APP_IP_STACK_ACCESS_KEY}&output=json`;
-            setIsLoading(true);
-            axios.get(url)
-                .then(res => { 
-                    const {latitude, longitude} = res.data;
-                    if(latitude && longitude){
-                        setStatus(false, false, "");
-                        setLocation({});//otherwise the map was not rerendered
-                        setLocation(res.data);
-                    } 
-                    else setStatus(false, true, ERROR_MESSAGE.NOT_FOUND);
-                })
-                .catch(error => setStatus(false, true, ERROR_MESSAGE.ERROR_OCCURRED + error.message));
+        if(props.ip !== ""){ 
+            if(!isValidSearch(props.ip)) setStatus(false, true, ERROR_MESSAGE.INVALID);
+            else {
+                const url = `http://api.ipstack.com/${props.ip}?access_key=${process.env.REACT_APP_IP_STACK_ACCESS_KEY}&output=json`;
+                setIsLoading(true);
+                axios.get(url)
+                    .then(res => { 
+                        const {latitude, longitude} = res.data;
+                        if(latitude && longitude){
+                            setStatus(false, false, "");
+                            setLocation({});//otherwise the map was not rerendered
+                            setLocation(res.data);
+                        } 
+                        else setStatus(false, true, ERROR_MESSAGE.NOT_FOUND);
+                    })
+                    .catch(error => setStatus(false, true, ERROR_MESSAGE.ERROR_OCCURRED + error.message));
+            }
         }
     }, [props.ip]);
 
