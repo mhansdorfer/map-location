@@ -3,6 +3,8 @@ import axios from 'axios';
 
 import LocationInfo from './LocationInfo';
 import LocationMap from './LocationMap';
+import { isValidSearch } from '../utils';
+import { ERROR_MESSAGE } from '../enums/ErrorMessage';
 
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
@@ -14,14 +16,15 @@ import Alert from 'react-bootstrap/Alert';
  */
 
 export default function Location(props){
-    const NOT_FOUND_ERROR_MESSAGE = "We could not have found this location. Please check your chosen IP or URL and try again.";
     const [location, setLocation] = useState({});
     const [isError, setIsError] = useState(false);
-    const [errorMessage, setErrorMessage] = useState(NOT_FOUND_ERROR_MESSAGE);
+    const [errorMessage, setErrorMessage] = useState(ERROR_MESSAGE.NOT_FOUND);
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(()=> {
-        if(props.ip !== ""){
+        if(props.ip === "") setStatus(false, false, "");
+        else if(!isValidSearch(props.ip)) setStatus(false, true, ERROR_MESSAGE.INVALID);
+        else {
             const url = `http://api.ipstack.com/${props.ip}?access_key=${process.env.REACT_APP_IP_STACK_ACCESS_KEY}&output=json`;
             setIsLoading(true);
             axios.get(url)
@@ -32,14 +35,10 @@ export default function Location(props){
                         setLocation({});//otherwise the map was not rerendered
                         setLocation(res.data);
                     } 
-                    else setStatus(false, true, NOT_FOUND_ERROR_MESSAGE);
+                    else setStatus(false, true, ERROR_MESSAGE.NOT_FOUND);
                 })
-                .catch(error => {
-                    setStatus(false, true, "An error has occurred: "+ error.message);
-                    console.error(`Location Error: ${error}`);
-                });
+                .catch(error => setStatus(false, true, ERROR_MESSAGE.ERROR_OCCURRED + error.message));
         }
-       
     }, [props.ip]);
 
     const setStatus = (loading, error, errorMessage) => {
